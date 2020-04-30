@@ -15,8 +15,15 @@ import com.divyansh.retrofitwithrxandroid.network.pojo.Datum;
 import com.divyansh.retrofitwithrxandroid.network.pojo.User;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,21 +54,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchUsers() {
-        Call<User> call = apiEndpoints.getUsers();
-        Log.i("call", call.request().toString());
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    adapter.setResults(response.body().getData());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.i("Error", t.getMessage());
-                Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
-            }
-        });
+        disposable.add(apiEndpoints.getUsers().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+        .subscribe(this::handleResponse, this::handleError));
+    }
+
+    private void handleResponse(User user) {
+        adapter.setResults(user.getData());
+    }
+
+    private void handleError(Throwable throwable) {
+        Toast.makeText(this, "Failed " + throwable.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposable.clear();
     }
 }

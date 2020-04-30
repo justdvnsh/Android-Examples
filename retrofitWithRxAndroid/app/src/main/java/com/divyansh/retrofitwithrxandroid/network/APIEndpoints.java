@@ -11,5 +11,5 @@ import retrofit2.http.Query;
 public interface APIEndpoints {
 
     @GET("/api/users")
-    Call<User> getUsers();
+    Observable<User> getUsers();
 }
