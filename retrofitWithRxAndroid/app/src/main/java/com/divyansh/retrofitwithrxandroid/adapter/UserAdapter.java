@@ -1,6 +1,7 @@
 package com.divyansh.retrofitwithrxandroid.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.divyansh.retrofitwithrxandroid.R;
-import com.divyansh.retrofitwithrxandroid.network.pojo.Result;
+import com.divyansh.retrofitwithrxandroid.network.pojo.Datum;
 
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.userViewHolder> {
 
     private Context context;
-    private List<Result> results;
+    private List<Datum> results;
 
-    public UserAdapter(Context context, List<Result> results) {
+    public UserAdapter(Context context, List<Datum> results) {
         this.context = context;
         this.results = results;
     }
@@ -33,8 +34,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.userViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull UserAdapter.userViewHolder holder, int position) {
-        Result result = results.get(position);
-        holder.name.setText(result.getName().getFirst() + " " + result.getName().getLast());
+        Log.i("result", String.valueOf(results.size()));
+        Datum result = results.get(position);
+        holder.name.setText(result.getFirstName());
         holder.email.setText(result.getEmail());
     }
 
@@ -43,8 +45,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.userViewHolder
         return results.size();
     }
 
-    public void setResults(List<Result> results) {
+    public void setResults(List<Datum> results) {
         this.results = results;
+        notifyDataSetChanged();
     }
 
     public class userViewHolder extends RecyclerView.ViewHolder {

@@ -1,33 +1,76 @@
 package com.divyansh.retrofitwithrxandroid.network.pojo;
 
-
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
 
-    @SerializedName("results")
+    @SerializedName("page")
     @Expose
-    private List<Result> results = null;
-    @SerializedName("info")
+    private Integer page;
+    @SerializedName("per_page")
     @Expose
-    private Info info;
+    private Integer perPage;
+    @SerializedName("total")
+    @Expose
+    private Integer total;
+    @SerializedName("total_pages")
+    @Expose
+    private Integer totalPages;
+    @SerializedName("data")
+    @Expose
+    private List<Datum> data = null;
+    @SerializedName("ad")
+    @Expose
+    private Ad ad;
 
-    public List<Result> getResults() {
-        return results;
+    public Integer getPage() {
+        return page;
     }
 
-    public void setResults(List<Result> results) {
-        this.results = results;
+    public void setPage(Integer page) {
+        this.page = page;
     }
 
-    public Info getInfo() {
-        return info;
+    public Integer getPerPage() {
+        return perPage;
     }
 
-    public void setInfo(Info info) {
-        this.info = info;
+    public void setPerPage(Integer perPage) {
+        this.perPage = perPage;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
+    public Integer getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(Integer totalPages) {
+        this.totalPages = totalPages;
+    }
+
+    public List<Datum> getData() {
+        return data;
+    }
+
+    public void setData(List<Datum> data) {
+        this.data = data;
+    }
+
+    public Ad getAd() {
+        return ad;
+    }
+
+    public void setAd(Ad ad) {
+        this.ad = ad;
     }
 
 }
