@@ -1,5 +1,6 @@
 package com.divyansh.dagger2_rxjava_mvvm.di;
 
+import com.divyansh.dagger2_rxjava_mvvm.di.auth.AuthModules;
 import com.divyansh.dagger2_rxjava_mvvm.di.auth.AuthViewModelModule;
 import com.divyansh.dagger2_rxjava_mvvm.ui.auth.AuthActivity;
 
@@ -11,7 +12,8 @@ public abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector(
             modules = {
-                    AuthViewModelModule.class
+                    AuthViewModelModule.class,
+                    AuthModules.class
             }
     )
     abstract AuthActivity contributeAuthActivity();

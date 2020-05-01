@@ -9,13 +9,24 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.divyansh.dagger2_rxjava_mvvm.R;
+import com.divyansh.dagger2_rxjava_mvvm.utils.Constants;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 // App Module is where we put all the application level dependencies.
 @Module
 public class AppModule {
+
+    @Singleton
+    @Provides
+    static Retrofit getRetrofitInstance() {
+        return new Retrofit.Builder().baseUrl(Constants.BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+    }
 
     @Provides
     static RequestOptions providesRequestOptions() {
