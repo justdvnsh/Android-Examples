@@ -18,7 +18,7 @@ import dagger.Provides;
 public class AppModule {
 
     @Provides
-    static RequestOptions providesRequestOptions(Application application) {
+    static RequestOptions providesRequestOptions() {
         return RequestOptions.placeholderOf(R.drawable.logo).error(R.drawable.white_background);
     }
 
