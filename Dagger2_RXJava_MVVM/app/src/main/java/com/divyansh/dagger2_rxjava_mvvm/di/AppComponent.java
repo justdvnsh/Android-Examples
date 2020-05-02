@@ -3,6 +3,7 @@ package com.divyansh.dagger2_rxjava_mvvm.di;
 import android.app.Application;
 
 import com.divyansh.dagger2_rxjava_mvvm.BaseApplication;
+import com.divyansh.dagger2_rxjava_mvvm.SessionManager;
 
 import javax.inject.Singleton;
 
@@ -21,6 +22,9 @@ import dagger.android.support.AndroidSupportInjectionModule;
         }
 )
 public interface AppComponent  extends AndroidInjector<BaseApplication> {
+
+    SessionManager sessionManager();
+
     // we inject the base application into App component.
     // app component is the service and Base Application is the Client
     // like interface in Retrofit, is the service and Retofit's instance is Client
