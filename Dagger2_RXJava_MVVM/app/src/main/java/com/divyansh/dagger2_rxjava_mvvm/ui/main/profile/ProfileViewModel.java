@@ -11,6 +11,7 @@ import com.divyansh.dagger2_rxjava_mvvm.ui.auth.AuthResource;
 
 import javax.inject.Inject;
 
+
 public class ProfileViewModel extends ViewModel {
 
     private static final String TAG = "ProfileViewModel";

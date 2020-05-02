@@ -31,8 +31,8 @@ import dagger.android.support.DaggerAppCompatActivity;
 
 public class AuthActivity extends DaggerAppCompatActivity {
 
-    private final String TAG = "application";
-    private AuthViewModel authViewModel;
+    private final String TAG = "Auth Act";
+    private AuthViewModel viewModel;
 
     @Inject
     ViewModelProviderFactory viewModelProviderFactory;
@@ -59,53 +59,61 @@ public class AuthActivity extends DaggerAppCompatActivity {
 
         ButterKnife.bind(this);
 
-        authViewModel = ViewModelProviders.of(this, viewModelProviderFactory).get(AuthViewModel.class);
+        viewModel = ViewModelProviders.of(this, viewModelProviderFactory).get(AuthViewModel.class);
 
         setLogo();
 
-        subscribeObserver();
+        subscribeObservers();
     }
 
     private void setLogo() {
         requestManager.load(logo).into(logoImage);
     }
 
-    private void subscribeObserver() {
-        authViewModel.observeUser().observe(this, new Observer<AuthResource<User>>() {
+    private void subscribeObservers(){
+        viewModel.observeUser().observe(this, new Observer<AuthResource<User>>() {
             @Override
             public void onChanged(AuthResource<User> userAuthResource) {
-                if (userAuthResource != null) {
-                    switch (userAuthResource.status) {
-                        case LOADING:
-                            setVisibility(true);
-                            break;
+                if(userAuthResource != null){
+                    switch (userAuthResource.status){
 
-                        case AUTHENTICATED:
-                            setVisibility(false);
-                            Log.d(TAG, "LOGIN SUCESS" + userAuthResource.data.getEmail());
-                            onLogin();
+                        case LOADING:{
+                            showProgressBar(true);
                             break;
+                        }
 
-                        case ERROR:
-                            setVisibility(false);
-                            Toast.makeText(AuthActivity.this, "Put a number between 1 to 10", Toast.LENGTH_SHORT).show();
+                        case AUTHENTICATED:{
+                            showProgressBar(false);
+                            Log.d(TAG, "onChanged: LOGIN SUCCESS: " + userAuthResource.data.getEmail());
+                            onLoginSuccess();
                             break;
+                        }
 
-                        case NOT_AUTHENTICATED:
-                            setVisibility(false);
+                        case ERROR:{
+                            showProgressBar(false);
+                            Toast.makeText(AuthActivity.this, userAuthResource.message
+                                    + "\nDid you enter a number between 1 and 10?", Toast.LENGTH_SHORT).show();
                             break;
+                        }
+
+                        case NOT_AUTHENTICATED:{
+                            showProgressBar(false);
+                            break;
+                        }
                     }
                 }
             }
         });
     }
 
-    private void onLogin() {
-        startActivity(new Intent(this, MainActivity.class));
+    private void onLoginSuccess(){
+        Log.d(TAG, "onLoginSuccess: login successful!");
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
         finish();
     }
 
-    private void setVisibility(boolean show) {
+    private void showProgressBar(boolean show) {
         if (show) {
             progressBar.setVisibility(View.VISIBLE);
         } else {
@@ -126,7 +134,7 @@ public class AuthActivity extends DaggerAppCompatActivity {
         if (TextUtils.isEmpty(userId.getText().toString())) {
             return ;
         }
-        authViewModel.authenticateWithId(Integer.parseInt(userId.getText().toString()));
+        viewModel.authenticateWithId(Integer.parseInt(userId.getText().toString()));
     }
 
 }

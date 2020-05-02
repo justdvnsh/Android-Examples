@@ -28,7 +28,7 @@ public class PostViewModel extends ViewModel {
         this.sessionManager = sessionManager;
 
         Log.d(TAG, "post view model is working");
-        Log.d(TAG, sessionManager.getAuthUser().getValue().data.getEmail());
+//        Log.d(TAG, sessionManager.getAuthUser().getValue().data.getEmail());
     }
 
     public LiveData<AuthResource<User>> getAuthUser() {

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.divyansh.dagger2_rxjava_mvvm.R;
 import com.divyansh.dagger2_rxjava_mvvm.models.User;
 import com.divyansh.dagger2_rxjava_mvvm.ui.auth.AuthResource;
+import com.divyansh.dagger2_rxjava_mvvm.ui.main.MainActivity;
 import com.divyansh.dagger2_rxjava_mvvm.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
@@ -48,11 +49,5 @@ public class PostFragment extends DaggerFragment {
 
     private void subscribeObservers() {
         viewModel.getAuthUser().removeObservers(getViewLifecycleOwner());
-        viewModel.getAuthUser().observe(getViewLifecycleOwner(), new Observer<AuthResource<User>>() {
-            @Override
-            public void onChanged(AuthResource<User> userAuthResource) {
-                Log.d(TAG, "Onchagned");
-            }
-        });
     }
 }

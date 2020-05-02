@@ -62,6 +62,7 @@ public class AuthViewModel extends ViewModel {
     }
 
     public LiveData<AuthResource<User>> observeUser() {
+        Log.d(TAG, sessionManager.toString());
         return sessionManager.getAuthUser();
     }
 }

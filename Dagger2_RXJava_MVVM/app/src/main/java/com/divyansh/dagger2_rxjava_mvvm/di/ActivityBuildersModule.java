@@ -1,5 +1,6 @@
 package com.divyansh.dagger2_rxjava_mvvm.di;
 
+import com.divyansh.dagger2_rxjava_mvvm.BaseActivity;
 import com.divyansh.dagger2_rxjava_mvvm.di.auth.AuthModules;
 import com.divyansh.dagger2_rxjava_mvvm.di.auth.AuthViewModelModule;
 import com.divyansh.dagger2_rxjava_mvvm.di.main.MainFragmentBuildersModule;
@@ -15,19 +16,13 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector(
-            modules = {
-                    AuthViewModelModule.class,
-                    AuthModules.class
-            }
-    )
+            modules = {AuthViewModelModule.class, AuthModules.class})
     abstract AuthActivity contributeAuthActivity();
 
+
     @ContributesAndroidInjector(
-            modules = {
-                    MainFragmentBuildersModule.class,
-                    MainViewModelModule.class,
-                    MainModules.class
-            }
+            modules = {MainFragmentBuildersModule.class, MainViewModelModule.class, MainModules.class}
     )
     abstract MainActivity contributeMainActivity();
+
 }
