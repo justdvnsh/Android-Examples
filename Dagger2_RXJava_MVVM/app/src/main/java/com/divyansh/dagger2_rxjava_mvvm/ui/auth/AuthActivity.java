@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,6 +19,7 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.divyansh.dagger2_rxjava_mvvm.R;
 import com.divyansh.dagger2_rxjava_mvvm.models.User;
+import com.divyansh.dagger2_rxjava_mvvm.ui.main.MainActivity;
 import com.divyansh.dagger2_rxjava_mvvm.viewmodel.ViewModelProviderFactory;
 
 import javax.inject.Inject;
@@ -81,6 +83,7 @@ public class AuthActivity extends DaggerAppCompatActivity {
                         case AUTHENTICATED:
                             setVisibility(false);
                             Log.d(TAG, "LOGIN SUCESS" + userAuthResource.data.getEmail());
+                            onLogin();
                             break;
 
                         case ERROR:
@@ -95,6 +98,11 @@ public class AuthActivity extends DaggerAppCompatActivity {
                 }
             }
         });
+    }
+
+    private void onLogin() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     private void setVisibility(boolean show) {
