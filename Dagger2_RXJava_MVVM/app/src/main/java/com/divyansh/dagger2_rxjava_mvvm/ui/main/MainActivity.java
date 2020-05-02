@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.divyansh.dagger2_rxjava_mvvm.BaseActivity;
 import com.divyansh.dagger2_rxjava_mvvm.R;
 import com.divyansh.dagger2_rxjava_mvvm.SessionManager;
+import com.divyansh.dagger2_rxjava_mvvm.ui.main.post.PostFragment;
 import com.divyansh.dagger2_rxjava_mvvm.ui.main.profile.ProfileFragment;
 
 public class MainActivity extends BaseActivity {
@@ -28,7 +29,7 @@ public class MainActivity extends BaseActivity {
 
     private void testFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame, new ProfileFragment()).commit();
+                .replace(R.id.frame, new PostFragment()).commit();
     }
 
     @Override

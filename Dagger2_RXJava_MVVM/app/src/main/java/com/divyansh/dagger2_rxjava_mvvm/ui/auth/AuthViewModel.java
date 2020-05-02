@@ -29,6 +29,7 @@ public class AuthViewModel extends ViewModel {
         this.sessionManager = sessionManager;
         this.authApi = authApi;
         Log.d(TAG, "View models is working ");
+//        Log.d(TAG, sessionManager.getAuthUser().get);
     }
 
     public void authenticateWithId(int id) {
