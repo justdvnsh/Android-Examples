@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
@@ -45,6 +47,9 @@ public class AuthActivity extends DaggerAppCompatActivity {
     @BindView(R.id.user_id_input)
     EditText userId;
 
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,14 +69,40 @@ public class AuthActivity extends DaggerAppCompatActivity {
     }
 
     private void subscribeObserver() {
-        authViewModel.observeUser().observe(this, new Observer<User>() {
+        authViewModel.observeUser().observe(this, new Observer<AuthResource<User>>() {
             @Override
-            public void onChanged(User user) {
-                if (user != null) {
-                    Log.d(TAG, user.getEmail());
+            public void onChanged(AuthResource<User> userAuthResource) {
+                if (userAuthResource != null) {
+                    switch (userAuthResource.status) {
+                        case LOADING:
+                            setVisibility(true);
+                            break;
+
+                        case AUTHENTICATED:
+                            setVisibility(false);
+                            Log.d(TAG, "LOGIN SUCESS" + userAuthResource.data.getEmail());
+                            break;
+
+                        case ERROR:
+                            setVisibility(false);
+                            Toast.makeText(AuthActivity.this, "Put a number between 1 to 10", Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case NOT_AUTHENTICATED:
+                            setVisibility(false);
+                            break;
+                    }
                 }
             }
         });
+    }
+
+    private void setVisibility(boolean show) {
+        if (show) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.login_button)
